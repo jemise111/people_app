@@ -16,7 +16,7 @@ describe Person do
     end
   end
   context "person is over 21" do
-    before(:all) { jesse.birthdate('1993-04-01') }
+    before(:all) { jesse.update(birthdate: '1993-04-01') }
     describe "#have_a_drink" do
       it "should increase a persons drinks by 1" do
         jesse.update(drinks: 0)
@@ -32,9 +32,27 @@ describe Person do
         expect(jesse.drinks).to eq(3)
       end
     end
+    describe "#drive_a_car" do
+      it "should return cab string if person has had at least 3 drinks" do
+        jesse.update(licence: true, drinks: 3)
+        expect(jesse.drive_a_car).to eq("Looks like a cab for you tonight")
+      end
+    end
+    describe "#sober_up" do
+      it "should decrease drinks by one if person has had drinks" do
+        jesse.update(drinks: 2)
+        jesse.sober_up
+        expect(jesse.drinks).to eq(1)
+      end
+      it "should do nothing if person has not had drinks" do
+        jesse.update(drinks: 0)
+        jesse.sober_up
+        expect(jesse.drinks).to eq(0)
+      end
+    end
   end
   context "person is under 21 but over 18" do
-    before(:all) { jesse.birthdate('1994-04-01') }
+    before(:all) { jesse.update(birthdate: '1994-04-01') }
     describe "#have_a_drink" do
       it "should return wait string" do
         jesse.update(drinks: 0)
@@ -46,27 +64,18 @@ describe Person do
     describe "#drive_a_car" do
       it "should return true if person has a license, false otherwise" do
         jesse.update(license: true)
-        expect(jesse.drive_a_car).to be_true
+        expect(jesse.drive_a_car).to eq(true)
         jesse.update(license: false)
-        expect(jesse.drive_a_car).to be_false
+        expect(jesse.drive_a_car).to eq(false)
+      end
+    end
+  end
+  context "person is under 18" do
+    before(:all) { jesse.update(birthdate: '2000-04-01') }
+    describe "#drive_a_car" do
+      it "should return youngin string" do
+        expect(jesse.drive_a_car).to eq("Not yet youngin")
       end
     end
   end
 end
-
-#name
-should return a string that is the object's full name
-#birthday
-
-#have_a_drink
-if they are over 21 then they can drink and the number stored in the drinks attribute is increased by 1
-if they are under 21 then the string "Wait a few years" is returned
-if they can drink, they are not allowed to have more than three drinks otherwise the string "Go home you're drunk"
-#drive_a_car
-if they are under 18 then a string "Not yet youngin" is returned
-if they are 18 and they have a license then they can drive
-if they are over 18 and have a license then they can drive
-if they are over 21, have a license, and are drunk then the string "Looks like a cab for you tonight" is returned
-#sober_up
-if they have any drinks, it decreases it by 1
-if they have no drinks, nothing happens

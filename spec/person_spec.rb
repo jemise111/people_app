@@ -12,7 +12,7 @@ describe Person do
   describe "#birthday" do
     it "should return a string that is the object's birthday" do
       jesse.update(birthdate: '1990-01-11')
-      expect(jesse.birthdate).to eq(Date.new('1990-01-11'))
+      expect(jesse.birthday).to eq('01/11/90')
     end
   end
   context "person is over 21" do

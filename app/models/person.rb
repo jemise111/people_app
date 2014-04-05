@@ -9,7 +9,9 @@ class Person < ActiveRecord::Base
   end
 
   def have_a_drink
-    self.drinks += 1 if age >= 21
+    if age >= 21
+      drinks < 3 ? self.drinks += 1 : "Go home you're drunk"
+    end
   end
 
 

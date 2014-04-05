@@ -16,7 +16,7 @@ describe Person do
     end
   end
   context "person is over 21" do
-    before(:all) { jesse.update(birthdate: '1993-04-01') }
+    before(:each) { jesse.update(birthdate: '1993-04-01') }
     describe "#have_a_drink" do
       it "should increase a persons drinks by 1" do
         jesse.update(drinks: 0)
@@ -52,7 +52,7 @@ describe Person do
     end
   end
   context "person is under 21 but over 18" do
-    before(:all) { jesse.update(birthdate: '1994-04-01') }
+    before(:each) { jesse.update(birthdate: '1994-04-01') }
     describe "#have_a_drink" do
       it "should return wait string" do
         jesse.update(drinks: 0)
@@ -71,7 +71,6 @@ describe Person do
     end
   end
   context "person is under 18" do
-    before(:all) { jesse.update(birthdate: '2000-04-01') }
     describe "#drive_a_car" do
       it "should return youngin string" do
         expect(jesse.drive_a_car).to eq("Not yet youngin")

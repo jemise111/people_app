@@ -20,7 +20,7 @@ class Person < ActiveRecord::Base
     if drunk?
       'Looks like a cab for you tonight'
     else
-      license
+      legal_for_driving? ? license : 'Not yet youngin'
     end
   end
 
@@ -32,11 +32,11 @@ class Person < ActiveRecord::Base
 
   def age
     # does not account for leap years
-    (self.birthdate - DateTime.now).abs / (365 * 24 * 60 * 60)
+    (birthdate - DateTime.now).abs / (365 * 24 * 60 * 60)
   end
 
   def drunk?
-    drinks.nil? ? false : drinks >= 3
+    drinks >= 3
   end
 
   def legal_for_drinking?

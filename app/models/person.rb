@@ -1,4 +1,5 @@
 class Person < ActiveRecord::Base
+  HOURS_IN_YEAR = 17 * 365 * 24 * 60 * 60 # doesn't account leap year
 
   def name
     "#{first_name} #{last_name}"

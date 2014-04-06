@@ -4,7 +4,7 @@ describe Person do
   subject(:jesse) { Person.create(first_name: "Jesse",
                                    last_name: "Sessler",
                                    image_url: "http://stockstoblocks.com/wp-content/uploads/2013/11/blogpic2.jpg",
-                                   birthdate: '1993-04-01',
+                                   birthdate: DateTime.now - (21 * 365),
                                    license: true,
                                    drinks: 0) }
   describe "#name" do
@@ -14,7 +14,8 @@ describe Person do
   end
   describe "#birthday" do
     it "should return a string that is the object's birthday" do
-      expect(jesse.birthday).to eq('04/01/93')
+      result = (DateTime.now - (21 * 365)).strftime("%D")
+      expect(jesse.birthday).to eq(result)
     end
   end
   context "person is over 21" do
@@ -51,7 +52,7 @@ describe Person do
     end
   end
   context "person is under 21 but over 18" do
-    before(:each) { jesse.update(birthdate: '1994-04-01') }
+    before(:each) { jesse.update(birthdate: DateTime.now - (19 * 365)) }
     describe "#have_a_drink" do
       it "should return wait string" do
         jesse.have_a_drink
@@ -70,7 +71,7 @@ describe Person do
   context "person is under 18" do
     describe "#drive_a_car" do
       it "should return youngin string" do
-        jesse.update(birthdate: '2000-04-01')
+        jesse.update(birthdate: DateTime.now - (17 * 365))
         expect(jesse.drive_a_car).to eq("Not yet youngin")
       end
     end

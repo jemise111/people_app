@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
   end
 
   def have_a_drink
-    if legal?
+    if legal_for_drinking?
       drunk? ? "Go home you're drunk" : self.drinks += 1
     else
       'Wait a few years'
@@ -19,6 +19,8 @@ class Person < ActiveRecord::Base
   def drive_a_car
     if drunk?
       'Looks like a cab for you tonight'
+    else
+      license
     end
   end
 
@@ -34,10 +36,14 @@ class Person < ActiveRecord::Base
   end
 
   def drunk?
-    drinks >= 3
+    drinks.nil? ? false : drinks >= 3
   end
 
-  def legal?
+  def legal_for_drinking?
     age >= 21
+  end
+
+  def legal_for_driving?
+    age >= 18
   end
 end

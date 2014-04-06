@@ -34,7 +34,7 @@ describe Person do
     end
     describe "#drive_a_car" do
       it "should return cab string if person has had at least 3 drinks" do
-        jesse.update(licence: true, drinks: 3)
+        jesse.update(license: true, drinks: 3)
         expect(jesse.drive_a_car).to eq("Looks like a cab for you tonight")
       end
     end

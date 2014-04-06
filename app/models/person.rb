@@ -9,13 +9,15 @@ class Person < ActiveRecord::Base
   end
 
   def have_a_drink
-    if age >= 21
-      drunk ? "Go home you're drunk" : self.drinks += 1
+    if legal?
+      drunk? ? "Go home you're drunk" : self.drinks += 1
+    else
+      'Wait a few years'
     end
   end
 
   def drive_a_car
-    if drunk
+    if drunk?
       'Looks like a cab for you tonight'
     end
   end
@@ -31,7 +33,11 @@ class Person < ActiveRecord::Base
     (self.birthdate - DateTime.now).abs / (365 * 24 * 60 * 60)
   end
 
-  def drunk
+  def drunk?
     drinks >= 3
+  end
+
+  def legal?
+    age >= 21
   end
 end

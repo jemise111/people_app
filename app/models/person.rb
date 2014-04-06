@@ -20,6 +20,10 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def sober_up
+    self.drinks -= 1 unless drinks.zero?
+  end
+
   private
 
   def age
